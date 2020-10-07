@@ -1,12 +1,38 @@
 // Assignment code here
 
-//Constant value representing the four possible character types and the possible values within each character type
+// Constant object representing the four possible character types and the possible values within each character type
 const CHARACTER_SET = {
   lowerCaseLetters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
   upperCaseLetters: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
   numbers: ["0", "1", "2", "3", "4", "5","6", "7", "8", "9"],
   specialCharacters: ["!","\"","#","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","\\","]","^","_","`","{","|","}","~"]
 };
+
+// Prompt user for password criteria
+function promptForCriteria(criteria){
+
+  // Change prompt based upon argument
+  var promptResponse = window.prompt("Include " + criteria + " in your generated password? Enter YES or NO to choose.");
+
+  // Check prompt for null values then recall function if null
+  if (promptResponse === "" || promptResponse === null) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return promptForCriteria(criteria);
+  }
+
+  // Convert response to lower case to allow for responses of various cases
+  promptResponse = promptResponse.toLowerCase();
+
+  // Check response for "yes", "no", or non-valid answer. Return appropriate value or recall function if invalid response.
+  if (promptResponse === "yes"){
+    return true;
+  } else if (promptResponse === "no") {
+    return false;
+  } else {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return promptForCriteria(criteria);
+  }
+}
 
 function generateCharacter(lowers, uppers, nums, specials){
 
@@ -40,18 +66,34 @@ function generateCharacter(lowers, uppers, nums, specials){
   }
 }
 
-
+// Generate password
 function generatePassword(){
-  var lowerCase = window.confirm("Include lower case letters in your generated password?");
-  var upperCase = window.confirm("Include upper case letters in your generate password?");
-  var numbers = window.confirm("Include numbers in your generated password?");
-  var specialChars = window.confirm("Include special characters in your generated password?");
+
+  // Call functions to prompt user for password criteria
+  var lowerCase = promptForCriteria("lower class letters");
+  var upperCase = promptForCriteria("upper class letters");
+  var numbers = promptForCriteria("numbers");
+  var specialChars = promptForCriteria("special characters");
+
+  // If user does not supply at least one password criteria, keep prompting
+  while (lowerCase === false && upperCase === false && numbers === false && specialChars === false){
+    window.alert("Please select at least one character type!");
+    lowerCase = promptForCriteria("lower class letters");
+    upperCase = promptForCriteria("upper class letters");
+    numbers = promptForCriteria("numbers");
+    specialChars = promptForCriteria("special characters");
+  }
+
+  //Prompt user for password length
   var passwordLength = window.prompt("How many characters would you like your password to be? (must be between 8 and 128 characters)");
 
-  while (!Number.isInteger(parseInt(passwordLength))) {
+  // Check user's requested password length to confirm if it's an integer and that it falls within allowed range. Keep prompting if not.
+  debugger;
+  while (!Number.isInteger(parseInt(passwordLength)) || parseInt(passwordLength) > 128 || parseInt(passwordLength) < 8) {
     passwordLength = window.prompt("How many characters would you like your password to be? Please enter a valid number! (must be between 8 and 128 characters)");
   }
   
+  // Initialize generated password variable outside of for loop.
   var generatedPassword = "";
 
   for (var i = 0; i < passwordLength; i++){
