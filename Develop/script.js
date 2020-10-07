@@ -1,10 +1,9 @@
 // Assignment code here
 function generatePassword(){
-  var response = window.confirm("Include lower case letters in your generated password?");
+  var lowerCase = window.confirm("Include lower case letters in your generated password?");
   console.log(response);
 
-  
-  var password2 = window.prompt("Enter a password:");
+  var upperCase = window.confirm("Include")
 
   return (password + password2);
 }
