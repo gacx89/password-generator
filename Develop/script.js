@@ -1,4 +1,13 @@
 // Assignment code here
+function generatePassword(){
+  var response = window.confirm("Include lower case letters in your generated password?");
+  console.log(response);
+
+  
+  var password2 = window.prompt("Enter a password:");
+
+  return (password + password2);
+}
 
 
 // Get references to the #generate element
